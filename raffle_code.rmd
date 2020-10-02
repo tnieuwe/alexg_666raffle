@@ -1,0 +1,43 @@
+---
+title: "666posting Raffle"
+author: "Tim Nieuwenhuis"
+date: "9/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+set.seed(666)
+```
+
+
+```{r}
+raffle_dat <- read.csv("raffle_test.csv")
+
+colnames(raffle_dat) <- c("time", "name")
+raffle_dat <- mutate(raffle_dat, name = str_to_title(name))
+
+
+wall_of_shame <- as.data.frame(table(raffle_dat$name)[(table(raffle_dat$name) > 2)])
+colnames(wall_of_shame) <- "How many times did they enter their name"
+
+raffle_dat <- dplyr::filter(raffle_dat, !(name %in% rownames(wall_of_shame)))
+```
+
+## The Wall of Shame:
+Removed them from the raffle as well
+```{r, opts.label ="squarefigure", fig.cap = "plot with correct margin, square size", fig.asp=0.62}
+ggtexttable(wall_of_shame)
+```
+
+## The Winner!
+```{r}
+sample(raffle_dat$name, 1)
+```
+
+
