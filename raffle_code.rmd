@@ -17,7 +17,7 @@ set.seed(666)
 
 
 ```{r}
-raffle_dat <- read.csv("raffle_test.csv")
+raffle_dat <- read.csv("raffle_final.csv")
 
 colnames(raffle_dat) <- c("time", "name")
 raffle_dat <- mutate(raffle_dat, name = str_to_title(name))
@@ -31,7 +31,7 @@ raffle_dat <- dplyr::filter(raffle_dat, !(name %in% rownames(wall_of_shame)))
 
 ## The Wall of Shame:
 Removed them from the raffle as well
-```{r, opts.label ="squarefigure", fig.cap = "plot with correct margin, square size", fig.asp=0.62}
+```{r}
 ggtexttable(wall_of_shame)
 ```
 
