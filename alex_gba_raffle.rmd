@@ -1,0 +1,44 @@
+---
+title: "GBAlex G Raffle"
+author: "Tim Nieuwenhuis"
+date: "6/6/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+## This time I used a seed selected by Jacob West.
+set.seed(666420999)
+```
+
+
+```{r}
+raffle_dat <- read.csv("gba_alex_g_final.csv")
+
+colnames(raffle_dat) <- c("time", "name", "special_char")
+raffle_dat <- mutate(raffle_dat, name = str_to_title(name))
+
+
+wall_of_shame <- as.data.frame(table(raffle_dat$name)[(table(raffle_dat$name) > 2)])
+colnames(wall_of_shame) <- "How many times did they enter their name"
+
+#Remove dupes greater than 2
+raffle_dat <- dplyr::filter(raffle_dat, !(name %in% rownames(wall_of_shame)))
+
+```
+
+## The Wall of Shame:
+There was no one to put on the wall this time
+```{r}
+
+```
+
+## The Winner!
+```{r}
+sample(raffle_dat$name, 1)
+```
